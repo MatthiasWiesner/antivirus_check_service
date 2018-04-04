@@ -3,30 +3,35 @@ apt update
 apt -y upgrade
 
 # install all needed packages
-apt install -y python3 rabbitmq-server amqp-tools make git 
+apt install -y python3 rabbitmq-server amqp-tools clamav-daemon clamav-freshclam clamav-unofficial-sigs make git
+
+# configure tcp network socket
+echo 'TCPSocket 3310' >> /etc/clamav/clamd.conf
+echo 'TCPAddr 0.0.0.0' >> /etc/clamav/clamd.conf
+systemctl restart clamav-daemon.service
 
 # enable rabbitmq cli tools
 rabbitmq-plugins enable rabbitmq_management
 
 # set rabbitmq user, vhost and queue
-rabbitmqctl add_vhost antivirus
-rabbitmqctl add_user mwiesner geheim
-rabbitmqctl set_permissions -p antivirus mwiesner ".*" ".*" ".*"
-rabbitmqctl set_user_tags mwiesner administrator
-rabbitmqadmin declare queue --vhost=antivirus name=scan_file durable=true -u mwiesner -p geheim
-rabbitmqadmin declare queue --vhost=antivirus name=scan_url durable=true -u mwiesner -p geheim
+cp /vagrant/secrets/rabbitmq.config /etc/rabbitmq/rabbitmq.config
+cp /vagrant/secrets/rabbitmq-definitions.json /etc/rabbitmq/rabbitmq-definitions.json
+systemctl restart rabbitmq-server
+
+# set service config
+cp /vagrant/secrets/config.yml /vagrant/antivirus_service/config.yml
 
 # install antivirus service
 cd /vagrant
 make install
 
-# Start develop webserver
-echo 'python3 /vagrant/develop_webserver.py 7001'
+# The clamav-daemon has to wait until the freshclam-daemon has finished loading the signatures.
+# You eventually have to restart clamav-daemon.
+# If clamav-daemon is running properly, you can start the services by:
 
-# the services should run, check status by:
-echo 'systemctl status antivirus-webserver'
-echo 'systemctl status antivirus-scanurl'
-echo 'systemctl status antivirus-scanfile'
+# systemctl start antivirus-webserver.service
+# systemctl start antivirus-scanurl.service
+# systemctl start antivirus-scanfile.service
 SCRIPT
 
 Vagrant.configure("2") do |config|

@@ -24,7 +24,7 @@ clean: pyclean
 
 install_packages:
 	apt update
-	apt install -y python3 python3-setuptools python3-pip clamav-daemon clamav-freshclam clamav-unofficial-sigs python3-yaml python3-pika python3-requests python3-click python3-mock python3-pyclamd python3-celery python3-aiohttp
+	apt install -y python3 python3-setuptools python3-pip python3-yaml python3-pika python3-requests python3-click python3-mock python3-pyclamd python3-aiohttp
 	service clamav-daemon start
 
 systemctl_install:

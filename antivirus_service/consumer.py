@@ -22,7 +22,7 @@ class ScanConsumer(object):
             self.handler.handle_error_message(payload, e)
         else:
             # here we can decide, based on the exception type, if we re-enqueue the task
-            # but currently we don't re-enqueue, but log this error (and/or email)
+            # currently we don't re-enqueue, but log this error
             ch.basic_ack(delivery_tag=method.delivery_tag)
             try:
                 self.handler.handle_message(payload)

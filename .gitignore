@@ -3,5 +3,7 @@
 *egg-info
 *.log
 *__pycache__
-tests/
+tests/sample.txt
+tests/scan_no_virus_large_file_payload.json
+secrets/
 antivirus_service/config.yml
