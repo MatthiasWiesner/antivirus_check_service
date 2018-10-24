@@ -109,6 +109,14 @@ To get the services running, you need access to rabbitmq-server and clamav-daemo
 ### Rabbitmq
 - Install rabbitmq-server or use an already installed rabbitmq-server
 - Create a vhost and a user with full permissions to the created vhost
+- OR
+- Copy `./resources/rabbitmq-definitions.template.json` to `/etc/rabbitmq/rabbitmq-definitions.json`.
+  Adjust the amqp `<user>` and the `<sha256-hash-of-users-password>`.
+  To get the `<sha256-hash-of-users-password>` you can follow the (missleading) documentation from rabbitmq:
+  https://www.rabbitmq.com/passwords.html#computing-password-hash .
+  
+  Or you can use my tool. Change to `./resources` and run `python encrypt_rabbitmq_password.py --password="<your-rabbit-password>"` (only python2). 
+
 
 ### Clamav-Daemon
 - Install clamav-daemon clamav-freshclam clamav-unofficial-sigs or use an already installed instance.
@@ -128,7 +136,7 @@ An API-Key is needed to use virustotal. To get this, an account on virustotal ha
 directory and run as `root`: `make install`. This will install all necessary
 packages.
 
-- Copy `/antivirus_service/config.template.yml` to `/antivirus_service/config.yml`
+- Copy `/resources/config.template.yml` to `/antivirus_service/config.yml`
   and adjust the config file.
 - Add `auth_keys` to the webserver section, format: `<username>:<password>`
 - The python setup routine installs the packages locally (the clone path) and
