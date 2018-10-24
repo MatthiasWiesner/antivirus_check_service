@@ -44,7 +44,7 @@ class Webserver(object):
     async def handle_scanfile(self, request):
         path = './' + request.rel_url.query['name']
         statinfo = os.stat(path)
-
+        print("Try to download %s" % path)
         response = web.StreamResponse()
         response.content_length = statinfo.st_size
         response.content_type = 'application/octet-stream'
@@ -56,7 +56,7 @@ class Webserver(object):
                     chunk = f.read(2048)
                     if not chunk:
                         return response
-                    response.write(chunk)
+                    await response.write(chunk)
         finally:
             await response.write_eof()
 
