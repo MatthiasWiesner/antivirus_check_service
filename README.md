@@ -71,7 +71,7 @@ Authenticate and publish a message to the regarding queue using the routing_key:
     }
     ~~~
 
-#### scan file:
+#### scan url:
  - routing key: `scan_url`
  - message:
     ~~~json
@@ -109,7 +109,7 @@ To get the services running, you need access to rabbitmq-server and clamav-daemo
 ### Rabbitmq
 - Install rabbitmq-server or use an already installed rabbitmq-server
 - Create a vhost and a user with full permissions to the created vhost
-- OR
+- or
 - Copy `./resources/rabbitmq-definitions.template.json` to `/etc/rabbitmq/rabbitmq-definitions.json`.
   Adjust the amqp `<user>` and the `<sha256-hash-of-users-password>`.
   To get the `<sha256-hash-of-users-password>` you can follow the (missleading) documentation from rabbitmq:
