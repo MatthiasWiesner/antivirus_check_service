@@ -14,12 +14,18 @@ systemctl restart clamav-daemon.service
 rabbitmq-plugins enable rabbitmq_management
 
 # set rabbitmq user, vhost and queue
-cp /vagrant/secrets/rabbitmq.config /etc/rabbitmq/rabbitmq.config
-cp /vagrant/secrets/rabbitmq-definitions.json /etc/rabbitmq/rabbitmq-definitions.json
+cp /vagrant/resources/rabbitmq.config /etc/rabbitmq/rabbitmq.config
+
+cp /vagrant/resources/rabbitmq-definitions.templates.json /etc/rabbitmq/rabbitmq-definitions.json
+# edit rabbitmq-definitions.templates.json 
+nano /etc/rabbitmq/rabbitmq-definitions.json
+
 systemctl restart rabbitmq-server
 
 # set service config
-cp /vagrant/secrets/config.yml /vagrant/antivirus_service/config.yml
+cp /vagrant/resources/config.template.yml /vagrant/antivirus_service/config.yml
+# edit service config
+nano /vagrant/antivirus_service/config.yml
 
 # install antivirus service
 cd /vagrant
