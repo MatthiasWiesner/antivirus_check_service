@@ -110,7 +110,8 @@ To get the services running, you need access to rabbitmq-server and clamav-daemo
 - Install rabbitmq-server or use an already installed rabbitmq-server
 - Create a vhost and a user with full permissions to the created vhost
 - or
-- Copy `./resources/rabbitmq-definitions.template.json` to `/etc/rabbitmq/rabbitmq-definitions.json`.
+- Copy `./resources/rabbitmq-definitions.template.json` to `/etc/rabbitmq/rabbitmq-definitions.json` and
+  Copy `./resources/rabbitmq.config` to `/etc/rabbitmq/rabbitmq.config`.
   Adjust the amqp `<user>` and the `<sha256-hash-of-users-password>`.
   To get the `<sha256-hash-of-users-password>` you can follow the (missleading) documentation from rabbitmq:
   https://www.rabbitmq.com/passwords.html#computing-password-hash .
